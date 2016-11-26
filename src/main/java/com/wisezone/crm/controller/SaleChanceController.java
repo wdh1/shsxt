@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.wisezone.base.BaseController;
 import com.wisezone.base.ResultInfo;
 import com.wisezone.base.exception.ParamException;
 import com.wisezone.crm.constant.Constant;
@@ -19,15 +20,15 @@ import com.wisezone.crm.service.SaleChanceService;
 
 @Controller
 @RequestMapping("sale_chance")
-public class SaleChanceController
+public class SaleChanceController extends BaseController
 {
+
 	@Autowired
 	private SaleChanceService saleChanceService;
 
 	@RequestMapping("index")
-	public String index(HttpServletRequest request, Model model) 
+	public String index(HttpServletRequest request, Model model)
 	{
-		model.addAttribute("ctx", request.getContextPath());
 		return "sale_chance";
 	}
 
@@ -38,34 +39,36 @@ public class SaleChanceController
 		Map<String, Object> result = saleChanceService.selectForPage(query);
 		return result;
 	}
-	
-	
+
 	@RequestMapping("add_update")
 	@ResponseBody
-	public ResultInfo addOrUpdate(SaleChance saleChance) 
+	public ResultInfo addOrUpdate(SaleChance saleChance)
 	{
-		try 
+		try
 		{
 			saleChanceService.addOrUpdate(saleChance);
-			return new ResultInfo(Constant.OPT_SUCCESS);
-		} catch (ParamException e) 
+			return success(Constant.OPT_SUCCESS);
+		} catch (ParamException e)
 		{
-			return new ResultInfo(e.getMessage());
+			// return new ResultInfo(e.getMessage());
+			return failure(e.getMessage());
 		}
-		
+
 	}
-	
+
 	@RequestMapping("delete")
 	@ResponseBody
-	public ResultInfo delete(String ids) 
+	public ResultInfo delete(String ids)
 	{
-		try 
+		try
 		{
 			saleChanceService.delete(ids);
-			return new ResultInfo(Constant.OPT_SUCCESS);
-		} catch (ParamException e) 
+			// return new ResultInfo(Constant.OPT_SUCCESS);
+			return success(Constant.OPT_SUCCESS);
+		} catch (ParamException e)
 		{
-			return new ResultInfo(e.getMessage());
+			// return new ResultInfo(e.getMessage());
+			return failure(e.getMessage());
 		}
 	}
 
