@@ -11,6 +11,7 @@ import com.wisezone.base.exception.ParamException;
 import com.wisezone.crm.constant.Constant;
 import com.wisezone.crm.dao.UserDao;
 import com.wisezone.crm.model.User;
+import com.wisezone.crm.util.AssertUtil;
 import com.wisezone.crm.util.MD5Util;
 import com.wisezone.crm.util.UserIDBase64;
 import com.wisezone.crm.vo.LoginUserInfo;
@@ -40,29 +41,32 @@ public class UserService
 	public UserLoginIdentity login(String userName,String password,String roleName)
 	{
 		//基本参数的校验
-		if (StringUtils.isBlank(userName))
-		{
-			throw new ParamException("请输入用户名");
-		}
-		if (StringUtils.isBlank(password))
-		{
-			throw new ParamException("请输入密码");
-		}
-		if (StringUtils.isBlank(roleName))
-		{
-			throw new ParamException("请选择用户类型");
-		}
+//		if (StringUtils.isBlank(userName))
+//		{
+//			throw new ParamException("请输入用户名");
+//		}
+//		if (StringUtils.isBlank(password))
+//		{
+//			throw new ParamException("请输入密码");
+//		}
+//		if (StringUtils.isBlank(roleName))
+//		{
+//			throw new ParamException("请选择用户类型");
+//		}
+		AssertUtil.notEmpty(userName, "请输入用户名");
+		AssertUtil.notEmpty(password, "请输入密码");
+		AssertUtil.notEmpty(roleName, "请选择用户类型");
 		
 		//判断用户是否存在
 		password = MD5Util.md5Method(password);
 		User user = userDao.findUserByUserNamePwdRole(userName.trim(),
 				password, roleName.trim());
 		
-		if (user == null)
-		{
-			throw new ParamException("用户名或密码错误");
-		}
-		
+//		if (user == null)
+//		{
+//			throw new ParamException("用户名或密码错误");
+//		}
+		AssertUtil.notNull(user, "用户名或密码错误");
 		//封装返回对象
 		UserLoginIdentity userLoginIdentity = new UserLoginIdentity();
 		userLoginIdentity.setUserIdString(UserIDBase64.encoderUserID(user.getId()));
@@ -168,22 +172,27 @@ public class UserService
 	 */
 	public static void checkUpdatePwdParams(String oldPassword, String newPassword, String confirmPassword)
 	{
-		if (StringUtils.isBlank(oldPassword))
-		{
-			throw new ParamException("请输入旧密码");
-		}
-		if (StringUtils.isBlank(newPassword))
-		{
-			throw new ParamException("请输入新密码");
-		}
-		if (StringUtils.isBlank(confirmPassword))
-		{
-			throw new ParamException("请输入确实密码");
-		}
-		if (!confirmPassword.equals(newPassword))
-		{
-			throw new ParamException("确定密码两次输入不一致");
-		}
+//		if (StringUtils.isBlank(oldPassword))
+//		{
+//			throw new ParamException("请输入旧密码");
+//		}
+//		if (StringUtils.isBlank(newPassword))
+//		{
+//			throw new ParamException("请输入新密码");
+//		}
+//		if (StringUtils.isBlank(confirmPassword))
+//		{
+//			throw new ParamException("请输入确实密码");
+//		}
+//		if (!confirmPassword.equals(newPassword))
+//		{
+//			throw new ParamException("确定密码两次输入不一致");
+//		}
+		
+		AssertUtil.notEmpty(oldPassword, "请输入旧密码");
+		AssertUtil.notEmpty(newPassword, "请输入新密码");
+		AssertUtil.notEmpty(confirmPassword, "请输入确认密码");
+		AssertUtil.isTrue(!confirmPassword.equals(newPassword), "确认密码不一致");
 	}
 
 	
