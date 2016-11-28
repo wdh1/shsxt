@@ -61,7 +61,7 @@ public class SaleChanceController extends BaseController
 	public ResultInfo delete(String ids)
 	{
 		try
-		{
+		{   
 			saleChanceService.delete(ids);
 			// return new ResultInfo(Constant.OPT_SUCCESS);
 			return success(Constant.OPT_SUCCESS);
