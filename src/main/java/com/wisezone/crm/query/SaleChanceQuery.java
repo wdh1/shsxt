@@ -1,18 +1,16 @@
 package com.wisezone.crm.query;
 
-import java.io.Serializable;
+import com.wisezone.base.BaseQuery;
 
 @SuppressWarnings("serial")
-public class SaleChanceQuery implements Serializable
+public class SaleChanceQuery extends BaseQuery
 {
+
 	private String customerName;
 	private String overview;
 	private String createMan;
 	private Integer state; // 分配状态 为null就是查询所有
 
-	private Integer page;
-	private Integer limit;
-	private String sort;
 	private Integer devResult;
 
 	public String getCustomerName()
@@ -53,36 +51,6 @@ public class SaleChanceQuery implements Serializable
 	public void setState(Integer state)
 	{
 		this.state = state;
-	}
-
-	public Integer getPage()
-	{
-		return page;
-	}
-
-	public void setPage(Integer page)
-	{
-		this.page = page;
-	}
-
-	public Integer getLimit()
-	{
-		return limit;
-	}
-
-	public void setLimit(Integer limit)
-	{
-		this.limit = limit;
-	}
-
-	public String getSort()
-	{
-		return sort;
-	}
-
-	public void setSort(String sort)
-	{
-		this.sort = sort;
 	}
 
 	public Integer getDevResult()
